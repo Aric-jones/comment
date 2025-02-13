@@ -9,4 +9,5 @@ public class SystemConstants {
     public static final String SESSION_CODE = "code";
     public static final String SESSION_CODE_ERROR = "验证码错误";
     public static final String SESSION_USER = "user";
+    public static final String TOKEN = "Authorization";
 }
