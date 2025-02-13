@@ -8,4 +8,5 @@ public class SystemConstants {
     public static final String PHONE_FORMAT_ERROR = "手机号格式不正确";
     public static final String SESSION_CODE = "code";
     public static final String SESSION_CODE_ERROR = "验证码错误";
+    public static final String SESSION_USER = "user";
 }
