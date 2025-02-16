@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -31,6 +32,7 @@ public class Shop implements Serializable {
      * 主键
      */
     @TableId(value = "id", type = IdType.AUTO)
+    @NotNull(message = "商铺id不能为空")
     private Long id;
 
     /**

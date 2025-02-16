@@ -10,6 +10,7 @@ import com.hmdp.utils.SystemConstants;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 /**
  * <p>
@@ -55,9 +56,9 @@ public class ShopController {
      * @return 无
      */
     @PutMapping
-    public Result updateShop(@RequestBody Shop shop) {
+    public Result updateShop(@RequestBody @Valid Shop shop) {
         // 写入数据库
-        shopService.updateById(shop);
+        shopService.updateEntityById(shop);
         return Result.ok();
     }
 

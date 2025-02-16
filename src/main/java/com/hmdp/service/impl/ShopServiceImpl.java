@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -55,10 +56,23 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         }
 
         // 6. 将查询到的数据保存到redis中
-        redisTemplate.opsForValue().set(shopKey, JSONUtil.toJsonStr(shop));
+        redisTemplate.opsForValue().set(shopKey, JSONUtil.toJsonStr(shop), RedisConstants.CACHE_SHOP_TTL, TimeUnit.MINUTES);
 
         // 7. 返回
-
         return Result.ok(shop);
+    }
+
+    /**
+     * 更新店铺信息
+     *
+     * @param shop
+     */
+    @Override
+    public void updateEntityById(Shop shop) {
+        // 更新数据
+        this.getById(shop.getId());
+
+        // 删除缓存信息
+        redisTemplate.delete(RedisConstants.CACHE_SHOP_KEY + shop.getId());
     }
 }
