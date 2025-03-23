@@ -21,6 +21,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import static com.hmdp.utils.RedisConstants.CACHE_SHOP_KEY;
+import static com.hmdp.utils.RedisConstants.CACHE_SHOP_TTL;
+
 /**
  * <p>
  * 服务实现类
@@ -55,7 +58,8 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         // Shop shop = queryWhitMutex(id);
         // 逻辑过期解决缓存击穿查询
         // Shop shop = queryWhitLogicalExpire(id);
-        Shop shop = cacheClient.queryWhitLogicalExpire(RedisConstants.CACHE_SHOP_KEY, RedisConstants.LOCK_SHOP_KEY, id, Shop.class, this::getById, RedisConstants.CACHE_SHOP_TTL, TimeUnit.MINUTES);
+        Shop shop = cacheClient
+                .queryWithPassThrough(CACHE_SHOP_KEY, id, Shop.class, this::getById, CACHE_SHOP_TTL, TimeUnit.MINUTES);
         if(Objects.isNull(shop)){
             return Result.fail("店铺不存在");
         }
@@ -75,6 +79,22 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 
         // 删除缓存信息
         redisTemplate.delete(RedisConstants.CACHE_SHOP_KEY + shop.getId());
+    }
+
+    /**
+     * @param typeId
+     * @param current
+     * @param x
+     * @param y
+     * @return com.hmdp.dto.Result
+     * @Author:CSH
+     * @Updator:CSH
+     * @Date 2025/3/23 13:38
+     * @Description:
+     */
+    @Override
+    public Result queryShopByType(Integer typeId, Integer current, Double x, Double y) {
+        return null;
     }
 
     private Shop queryWhitLogicalExpire(Long id) {

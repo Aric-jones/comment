@@ -30,7 +30,7 @@ public class VoucherOrderController {
      * @return
      */
     @PostMapping("seckill/{id}")
-    public Result seckillVoucher(@PathVariable("id") @NotNull(message = "优惠券id不能为空") Long voucherId) {
+    public Result seckillVoucher(@PathVariable("id") @NotNull(message = "优惠券id不能为空") Long voucherId) throws InterruptedException {
         return voucherOrderService.seckillVoucher(voucherId);
     }
 }

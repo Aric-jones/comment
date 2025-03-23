@@ -26,4 +26,17 @@ public interface IShopService extends IService<Shop> {
      * @param shop
      */
     void updateEntityById(Shop shop);
+
+    /**
+     * @param typeId
+     * @param current
+     * @param x
+     * @param y
+     * @return com.hmdp.dto.Result
+     * @Author:CSH
+     * @Updator:CSH
+     * @Date 2025/3/23 13:38
+     * @Description:
+     */
+    Result queryShopByType(Integer typeId, Integer current, Double x, Double y);
 }
